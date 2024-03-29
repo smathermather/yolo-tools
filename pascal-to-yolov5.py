@@ -41,5 +41,5 @@ def extract_info_from_xml(xml_file):
     
     return info_dict
 
-print(extract_info_from_xml('in/road0.xml'))
+print(extract_info_from_xml('in/pascal-sample.xml'))
 
