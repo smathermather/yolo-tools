@@ -19,7 +19,7 @@ class_name_to_id_mapping = {"trafficlight": 0,
                            "speedlimit": 2,
                            "crosswalk": 3}
 
-annotations = [os.path.join('out-annotations', x) for x in os.listdir('out-annotations') if x[-3:] == "txt"]
+annotations = [os.path.join('out', x) for x in os.listdir('out') if x[-3:] == "txt"]
 
 class_id_to_name_mapping = dict(zip(class_name_to_id_mapping.values(), class_name_to_id_mapping.keys()))
 
@@ -57,7 +57,7 @@ with open(annotation_file, "r") as file:
     annotation_list = [[float(y) for y in x ] for x in annotation_list]
 
 #Get the corresponding image file
-image_file = annotation_file.replace("out-annotations", "in-images").replace("txt", "png")
+image_file = annotation_file.replace("out", "in/images").replace("txt", "png")
 assert os.path.exists(image_file)
 
 #Load the image

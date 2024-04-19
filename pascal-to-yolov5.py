@@ -43,11 +43,6 @@ def extract_info_from_xml(xml_file):
     
     return info_dict
 
-# single sample
-#print(extract_info_from_xml('in/pascal-sample.xml'))
-
-# NEXT: use info_dict to write the YOLOv5 format file
-
 # Dictionary that maps class names to IDs
 class_name_to_id_mapping = {"trafficlight": 0,
                            "stop": 1,
@@ -82,18 +77,18 @@ def convert_to_yolov5(info_dict):
         print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(class_id, b_center_x, b_center_y, b_width, b_height))
         
     # Name of the file which we have to save 
-    save_file_name = os.path.join("out-annotations", info_dict["filename"].replace("png", "txt"))
+    save_file_name = os.path.join("out", info_dict["filename"].replace("png", "txt"))
     
     # Save the annotation to disk
     print("\n".join(print_buffer), file= open(save_file_name, "w"))
 
 
 # Get the annotations
-annotations = [os.path.join('in-annotations', x) for x in os.listdir('in-annotations') if x[-3:] == "xml"]
+annotations = [os.path.join('in/annotations', x) for x in os.listdir('in/annotations') if x[-3:] == "xml"]
 annotations.sort()
 
 # Convert and save the annotations
 for ann in tqdm(annotations):
     info_dict = extract_info_from_xml(ann)
     convert_to_yolov5(info_dict)
-annotations = [os.path.join('out-annotations', x) for x in os.listdir('out-annotations') if x[-3:] == "txt"]
+annotations = [os.path.join('out', x) for x in os.listdir('out') if x[-3:] == "txt"]
