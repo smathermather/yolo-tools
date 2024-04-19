@@ -19,7 +19,7 @@ class_name_to_id_mapping = {"trafficlight": 0,
                            "speedlimit": 2,
                            "crosswalk": 3}
 
-annotations = [os.path.join('out', x) for x in os.listdir('out') if x[-3:] == "txt"]
+annotations = [os.path.join('out-annotations', x) for x in os.listdir('out-annotations') if x[-3:] == "txt"]
 
 class_id_to_name_mapping = dict(zip(class_name_to_id_mapping.values(), class_name_to_id_mapping.keys()))
 
