@@ -57,7 +57,7 @@ with open(annotation_file, "r") as file:
     annotation_list = [[float(y) for y in x ] for x in annotation_list]
 
 #Get the corresponding image file
-image_file = annotation_file.replace("out", "images").replace("txt", "png")
+image_file = annotation_file.replace("out-annotations", "in-images").replace("txt", "png")
 assert os.path.exists(image_file)
 
 #Load the image
