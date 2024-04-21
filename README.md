@@ -31,3 +31,15 @@ Typical workflow:
     $ python test-converted.py
     $ python partition.py
 
+After converting and partitioning, go to your yolov7 data directory and copy over the config, images, and labels
+
+    $ cd ~/yolov7/data
+    $ mkdir test1
+    $ cp ~/cv-tools/yolo/config/test1-data.yaml .
+    $ cp -pr ~/cv-tools/yolo/out/partition/* test1/
+
+Then go to the yolov7 directory and run the training.
+
+    $ python train.py --img-size 640 --cfg cfg/training/yolov7.yaml --hyp data/hyp.scratch.custom.yaml --batch 8 --epochs 100 --data data/test1-data.yaml --weights yolov7_training.pt --workers 24 --name yolo_road_det
+
+
