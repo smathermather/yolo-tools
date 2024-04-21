@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 
 # Read images and annotations
 images = [os.path.join('in/images', x) for x in os.listdir('in/images')]
-annotations = [os.path.join('out', x) for x in os.listdir('out') if x[-3:] == "txt"]
+annotations = [os.path.join('out/converted', x) for x in os.listdir('out/converted') if x[-3:] == "txt"]
 
 print("Sorting and splitting dataset, total images: {}".format(len(images)))
 
@@ -40,18 +40,19 @@ for one_dir in new_dirs:
 def move_files_to_folder(list_of_files, destination_folder):
     for f in list_of_files:
         try:
-            shutil.move(f, destination_folder)
+            #shutil.move(f, destination_folder)
+            shutil.copy(f, destination_folder)
         except:
             print(f)
             assert False
 
 # Move the splits into their folders
 move_files_to_folder(train_images, 'out/partition/images/train')
-move_files_to_folder(val_images, 'out/partition/images/val/')
+move_files_to_folder(val_images, 'out/partition/images/validate/')
 move_files_to_folder(test_images, 'out/partition/images/test/')
-move_files_to_folder(train_annotations, 'annotations/train/')
-move_files_to_folder(val_annotations, 'annotations/val/')
-move_files_to_folder(test_annotations, 'annotations/test/')
+move_files_to_folder(train_annotations, 'out/partition/annotations/train/')
+move_files_to_folder(val_annotations, 'out/partition/annotations/validate/')
+move_files_to_folder(test_annotations, 'out/partition/annotations/test/')
 #!mv annotations labels
 #%cd ../
 

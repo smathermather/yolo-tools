@@ -77,7 +77,7 @@ def convert_to_yolov5(info_dict):
         print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(class_id, b_center_x, b_center_y, b_width, b_height))
         
     # Name of the file which we have to save 
-    save_file_name = os.path.join("out", info_dict["filename"].replace("png", "txt"))
+    save_file_name = os.path.join("out/converted", info_dict["filename"].replace("png", "txt"))
     
     # Save the annotation to disk
     print("\n".join(print_buffer), file= open(save_file_name, "w"))
@@ -87,8 +87,11 @@ def convert_to_yolov5(info_dict):
 annotations = [os.path.join('in/annotations', x) for x in os.listdir('in/annotations') if x[-3:] == "xml"]
 annotations.sort()
 
+if not os.path.exists('out/converted'):
+    os.mkdir('out/converted')
+
 # Convert and save the annotations
 for ann in tqdm(annotations):
     info_dict = extract_info_from_xml(ann)
     convert_to_yolov5(info_dict)
-annotations = [os.path.join('out', x) for x in os.listdir('out') if x[-3:] == "txt"]
+annotations = [os.path.join('out/converted', x) for x in os.listdir('out/converted') if x[-3:] == "txt"]
