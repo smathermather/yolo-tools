@@ -24,8 +24,8 @@ train_images, val_images, train_annotations, val_annotations = train_test_split(
 val_images, test_images, val_annotations, test_annotations = train_test_split(val_images, val_annotations, test_size = 0.5, random_state = 1)
 
 new_dirs = ["out/partition", "out/partition/images", "out/partition/annotations", "out/partition/images/train", 
-            "out/partition/images/validate", "out/partition/images/test", 
-            "out/partition/annotations/train", "out/partition/annotations/validate", "out/partition/annotations/test"]
+            "out/partition/images/val", "out/partition/images/test", 
+            "out/partition/annotations/train", "out/partition/annotations/val", "out/partition/annotations/test"]
 for one_dir in new_dirs:
     #print(one_dir)
     if not os.path.exists(one_dir):
@@ -48,10 +48,10 @@ def move_files_to_folder(list_of_files, destination_folder):
 
 # Move the splits into their folders
 move_files_to_folder(train_images, 'out/partition/images/train')
-move_files_to_folder(val_images, 'out/partition/images/validate/')
+move_files_to_folder(val_images, 'out/partition/images/val/')
 move_files_to_folder(test_images, 'out/partition/images/test/')
 move_files_to_folder(train_annotations, 'out/partition/annotations/train/')
-move_files_to_folder(val_annotations, 'out/partition/annotations/validate/')
+move_files_to_folder(val_annotations, 'out/partition/annotations/val/')
 move_files_to_folder(test_annotations, 'out/partition/annotations/test/')
 #!mv annotations labels
 #%cd ../
