@@ -1,6 +1,6 @@
-# pascal-to-yolov5.py
+# convert-pascal.py
 #
-# For converting annotations from PASCAL VOC XML format to YOLOv5 format.
+# For converting bbox annotations from PASCAL VOC XML format to YOLOv5 format.
 # Most of this is sourced from Paperspace Blog - https://blog.paperspace.com/train-yolov7-custom-data/
 
 import xml.etree.ElementTree as ET
