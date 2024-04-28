@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SRC_DIR=~/work/datasets/road-signs
-TRAIN_DIR=data/test2
+SRC_DIR=~/work/datasets/ready-for-training/weinstein-poland-1
+TRAIN_DIR=data/poland1
 
 echo "cleaning files"
 mkdir $TRAIN_DIR
