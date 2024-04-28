@@ -100,6 +100,7 @@ from tqdm import tqdm
 
 
 # Field definitions - select the list that matches the annotations input file
+class_id = 0    # alway 0, as we will only have one class: "Bird"
 field_image = 6
 field_bbox_start = 2
 header_row = 1  # 1 if there is a header row, 0 if no header row
@@ -138,11 +139,17 @@ def convert_to_yolov5(info_dict):
             files[file_name] = []
             last_file_name = file_name
 
+        bbox = [class_id, one_record[0+field_bbox_start], one_record[1+field_bbox_start], one_record[2+field_bbox_start], one_record[3+field_bbox_start]]
+        files[file_name].append(bbox)
+
     print(files)
-    print(len(files))
+    # print(len(files))
 
+    return files
 
-
+# Write the yolov5 format annotation files
+def write_yolov5(file_dict):
+    print("Writing files, total: ", len(file_dict))
 
 
 # ------------------- Main Execution -------------------------------------------------------------
@@ -162,6 +169,7 @@ annotations.sort()
 for ann in tqdm(annotations):
     #print("  file: " + ann)
     info_dict = extract_annotations(ann)
-    convert_to_yolov5(info_dict)
+    file_dict = convert_to_yolov5(info_dict)
+    write_yolov5(file_dict)
 
 print("Done")
