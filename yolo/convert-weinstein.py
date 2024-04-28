@@ -6,6 +6,8 @@
 #
 # Paper: https://www.biorxiv.org/content/10.1101/2021.08.05.455311v1.full
 # Data: https://zenodo.org/records/5033174 
+#
+# Some functions drawn from Paperspace Blog - https://blog.paperspace.com/train-yolov7-custom-data/
 
 import csv
 import os
@@ -101,13 +103,16 @@ from tqdm import tqdm
 
 # Field definitions - select the list that matches the annotations input file
 class_id = 0    # alway 0, as we will only have one class: "Bird"
+# params for poland.zip / poland_train.csv
+image_height = 1200
+image_width = 1200
 field_image = 6
-field_bbox_start = 2
 header_row = 1  # 1 if there is a header row, 0 if no header row
-
-#... add other field definitions for other input file arrangements
-
-
+field_xmin = 2
+field_ymin = 5
+field_xmax = 4
+field_ymax = 3
+#... add other field definitions for other input files
 
 # Read and parse annotations data
 def extract_annotations(csv_file):
@@ -139,9 +144,19 @@ def convert_to_yolov5(info_dict):
             files[file_name] = []
             last_file_name = file_name
 
-        bbox = [class_id, one_record[0+field_bbox_start], one_record[1+field_bbox_start], one_record[2+field_bbox_start], one_record[3+field_bbox_start]]
+        # convert to yolo values
+        b_center_x = (float(one_record[field_xmin]) + float(one_record[field_xmax])) / 2 
+        b_center_y = (float(one_record[field_ymin]) + float(one_record[field_ymax])) / 2
+        b_width    = (float(one_record[field_xmax]) - float(one_record[field_xmin]))
+        b_height   = (float(one_record[field_ymax]) - float(one_record[field_ymin]))
 
-        #... convert to yolo values
+        # normalize to dimensions of the image
+        b_center_x /= image_width 
+        b_center_y /= image_height 
+        b_width    /= image_width 
+        b_height   /= image_height 
+
+        bbox = [class_id, b_center_x, b_center_y, b_width, b_height]
 
         files[file_name].append(bbox)
 
@@ -161,7 +176,7 @@ def write_yolov5(file_dict):
         for one_row in rows:
             #print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(class_id, b_center_x, b_center_y, b_width, b_height))
             #print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(one_row[0], one_row[1], one_row[2], one_row[3], one_row[4]))
-            print_buffer.append("{} {} {} {} {}".format(one_row[0], one_row[1], one_row[2], one_row[3], one_row[4]))
+            print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(one_row[0], one_row[1], one_row[2], one_row[3], one_row[4]))
 
         out_file_path = "out/converted/" + one_record.replace("png", "txt")
         print("\n".join(print_buffer), file= open(out_file_path, "w"))
