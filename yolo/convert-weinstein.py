@@ -140,9 +140,12 @@ def convert_to_yolov5(info_dict):
             last_file_name = file_name
 
         bbox = [class_id, one_record[0+field_bbox_start], one_record[1+field_bbox_start], one_record[2+field_bbox_start], one_record[3+field_bbox_start]]
+
+        #... convert to yolo values
+
         files[file_name].append(bbox)
 
-    print(files)
+    #print(files)
     # print(len(files))
 
     return files
@@ -150,6 +153,26 @@ def convert_to_yolov5(info_dict):
 # Write the yolov5 format annotation files
 def write_yolov5(file_dict):
     print("Writing files, total: ", len(file_dict))
+
+    for one_record in file_dict:
+        #print(file_dict[one_record])
+        print_buffer = []
+        rows = file_dict[one_record]
+        for one_row in rows:
+            #print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(class_id, b_center_x, b_center_y, b_width, b_height))
+            #print_buffer.append("{} {:.3f} {:.3f} {:.3f} {:.3f}".format(one_row[0], one_row[1], one_row[2], one_row[3], one_row[4]))
+            print_buffer.append("{} {} {} {} {}".format(one_row[0], one_row[1], one_row[2], one_row[3], one_row[4]))
+
+        out_file_path = "out/converted/" + one_record.replace("png", "txt")
+        print("\n".join(print_buffer), file= open(out_file_path, "w"))
+
+        # with open(out_file_path, "wt", newline='') as fp:
+        #     writer = csv.writer(fp, delimiter=",")
+        #     # writer.writerow(["your", "header", "foo"])  # write header
+        #     #writer.writerows(rows)
+        
+        
+            
 
 
 # ------------------- Main Execution -------------------------------------------------------------
