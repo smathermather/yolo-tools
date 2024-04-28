@@ -12,12 +12,10 @@ from random import randint
 import matplotlib.pyplot as plt
 
 # Dictionary that maps class names to IDs
-# This is currently a hardcoded list based on training data.
-# TODO: make this an input parameter or something
-class_name_to_id_mapping = {"trafficlight": 0,
-                           "stop": 1,
-                           "speedlimit": 2,
-                           "crosswalk": 3}
+# road sign training data
+#class_name_to_id_mapping = {"trafficlight": 0, "stop": 1, "speedlimit": 2, "crosswalk": 3}
+# Weinstein training data
+class_name_to_id_mapping = {"Bird": 0}
 
 annotations = [os.path.join('out/converted', x) for x in os.listdir('out/converted') if x[-3:] == "txt"]
 

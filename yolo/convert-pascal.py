@@ -44,10 +44,8 @@ def extract_info_from_xml(xml_file):
     return info_dict
 
 # Dictionary that maps class names to IDs
-class_name_to_id_mapping = {"trafficlight": 0,
-                           "stop": 1,
-                           "speedlimit": 2,
-                           "crosswalk": 3}
+# road sign training data
+class_name_to_id_mapping = {"trafficlight": 0, "stop": 1, "speedlimit": 2, "crosswalk": 3}
 
 # Convert the info dict to the required yolo format and write it to disk
 def convert_to_yolov5(info_dict):
