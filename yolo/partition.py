@@ -15,9 +15,28 @@ images = [os.path.join('in/images', x) for x in os.listdir('in/images')]
 annotations = [os.path.join('out/converted', x) for x in os.listdir('out/converted') if x[-3:] == "txt"]
 
 print("Sorting and splitting dataset, total images: {}".format(len(images)))
+print("  Total annotation files: {}".format(len(annotations)))
 
 images.sort()
 annotations.sort()
+
+# Check list sizes, remove any images with no annotations
+if (len(images) != len(annotations)):
+    orphan_count = 0
+    orphan_list = []
+    print("List sizes don't match.  Removing orphan images.")
+    annotation_files = os.listdir('out/converted')
+    for one_image in images:
+        annotation_file_name = os.path.basename(one_image).replace("png", "txt")
+        if annotation_file_name not in annotation_files:
+            #print("not found: {}".format(annotation_file_name))
+            #print("  remove: {}".format(one_image))
+            orphan_count += 1
+            orphan_list.append(one_image)
+    print("removing {} orphans".format(orphan_count))
+    for one_orphan in orphan_list:
+        images.remove(one_orphan)
+    print("total images is now: {}".format(len(images)))
 
 # Split the dataset into train-valid-test splits 
 train_images, val_images, train_annotations, val_annotations = train_test_split(images, annotations, test_size = 0.2, random_state = 1)

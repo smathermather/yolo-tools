@@ -13,27 +13,59 @@ import csv
 import os
 from tqdm import tqdm
 
-
 # Field definitions - select the list that matches the annotations input file
 class_id = 0    # alway 0, as we will only have one class: "Bird"
+
 # params for poland.zip / poland_train.csv
-image_height = 1200
-image_width = 1200
-field_image = 6
+# image_height = 1200
+# image_width = 1200
+# field_image = 6
+# header_row = 1  # 1 if there is a header row, 0 if no header row
+# field_xmin = 2
+# field_ymin = 5
+# field_xmax = 4
+# field_ymax = 3
+
+# params for neill.zip / neill_train.csv
+image_height = 700
+image_width = 700
+field_image = 7
 header_row = 1  # 1 if there is a header row, 0 if no header row
 field_xmin = 2
-field_ymin = 5
+field_ymin = 3
 field_xmax = 4
-field_ymax = 3
-# params for neill.zip / neill_train.csv
-# image_height = 700
-# image_width = 700
-# field_image = 7
+field_ymax = 5
+
+# params for pfeifer_train.csv
+# image_height = 450
+# image_width = 450
+# field_image = 1
 # header_row = 1  # 1 if there is a header row, 0 if no header row
 # field_xmin = 2
 # field_ymin = 3
 # field_xmax = 4
 # field_ymax = 5
+
+# params for hayes_train.csv
+# image_height = 450
+# image_width = 450
+# field_image = 0
+# header_row = 1  # 1 if there is a header row, 0 if no header row
+# field_xmin = 1
+# field_ymin = 2
+# field_xmax = 3
+# field_ymax = 4
+
+# params for mckellar_train.csv
+# image_height = 900
+# image_width = 900
+# field_image = 1
+# header_row = 1  # 1 if there is a header row, 0 if no header row
+# field_xmin = 2
+# field_ymin = 3
+# field_xmax = 4
+# field_ymax = 5
+
 
 #TODO add other field definitions for other input files
 
