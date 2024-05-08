@@ -20,14 +20,14 @@ class_id = 0    # always 0, as we will only have one class: "Bird"
 # Creates an arguments parser allowing User flexiblity in entering variable data 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A program that converts image bounding box annotations into the YOLOv5 format')
-    parser.add_argument('-height', '--image-height', type=int, help='Takes the Height of the image', required= True)
-    parser.add_argument('-width', '--image-width', type=int, help='Takes the Width of the image', required= True)
-    parser.add_argument('-image', '--field-image', type=int, help='Takes the field image value', required= True)
-    parser.add_argument('-header', '--header-row', type=int, choices=[0,1], help='Denotes the presence or absence of a header row', required= True)
-    parser.add_argument('-xmin', '--field-xmin', type=int, help='Field x-axis minimum', required= True)
-    parser.add_argument('-ymin', '--field-ymin', type=int, help='Field y-axis minimum', required= True)
-    parser.add_argument('-xmax', '--field-xmax', type=int, help='Field x-axis maximum', required= True)
-    parser.add_argument('-ymax', '--field-ymax', type=int, help='Field y-axis maximum', required= True)
+    parser.add_argument('-height', '--image-height', type=int, default=800, help='Takes the height of the training image')
+    parser.add_argument('-width', '--image-width', type=int, default=800, help='Takes the Width of the image')
+    parser.add_argument('-image', '--field-image', type=int, default=7, help='CSV field containing the training image file name')
+    parser.add_argument('-header', '--header-row', type=int, choices=[0,1], default=1, help='Denotes the presence or absence of a header row in CSV file')
+    parser.add_argument('-xmin', '--field-xmin', type=int, default=2, help='CSV field containing the x-axis minimum value')
+    parser.add_argument('-ymin', '--field-ymin', type=int, default=3, help='CSV field containing the y-axis minimum value')
+    parser.add_argument('-xmax', '--field-xmax', type=int, default=4, help='CSV field containing the x-axis maximum value')
+    parser.add_argument('-ymax', '--field-ymax', type=int, default=5, help='CSV field containing the y-axis maximum value')
     
     args = parser.parse_args()
 
