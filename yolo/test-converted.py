@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 # road sign training data
 #class_name_to_id_mapping = {"trafficlight": 0, "stop": 1, "speedlimit": 2, "crosswalk": 3}
 # Weinstein training data
-class_name_to_id_mapping = {"Bird": 0}
+class_name_to_id_mapping = {"Detected": 0}
 
 annotations = [os.path.join('out/converted', x) for x in os.listdir('out/converted') if x[-3:] == "txt"]
 

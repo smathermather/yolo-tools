@@ -1,4 +1,4 @@
-# convert-weinstein.py
+# convert-new.py
 #
 # For converting bbox annotations in Weinstein et al to YOLOv5 format.
 # Weinstein training data bbox annotations are all in one file.  This 
@@ -9,65 +9,47 @@
 #
 # Some functions drawn from Paperspace Blog - https://blog.paperspace.com/train-yolov7-custom-data/
 
+import argparse
 import csv
 import os
 from tqdm import tqdm
 
 # Field definitions - select the list that matches the annotations input file
-class_id = 0    # alway 0, as we will only have one class: "Bird"
+class_id = 0    # always 0, as we will only have one class: "Bird"
 
-# params for poland.zip / poland_train.csv
-# image_height = 1200
-# image_width = 1200
-# field_image = 6
-# header_row = 1  # 1 if there is a header row, 0 if no header row
-# field_xmin = 2
-# field_ymin = 5
-# field_xmax = 4
-# field_ymax = 3
-
-# params for neill.zip / neill_train.csv
-image_height = 700
-image_width = 700
-field_image = 7
-header_row = 1  # 1 if there is a header row, 0 if no header row
-field_xmin = 2
-field_ymin = 3
-field_xmax = 4
-field_ymax = 5
-
-# params for pfeifer_train.csv
-# image_height = 450
-# image_width = 450
-# field_image = 1
-# header_row = 1  # 1 if there is a header row, 0 if no header row
-# field_xmin = 2
-# field_ymin = 3
-# field_xmax = 4
-# field_ymax = 5
-
-# params for hayes_train.csv
-# image_height = 450
-# image_width = 450
-# field_image = 0
-# header_row = 1  # 1 if there is a header row, 0 if no header row
-# field_xmin = 1
-# field_ymin = 2
-# field_xmax = 3
-# field_ymax = 4
-
-# params for mckellar_train.csv
-# image_height = 900
-# image_width = 900
-# field_image = 1
-# header_row = 1  # 1 if there is a header row, 0 if no header row
-# field_xmin = 2
-# field_ymin = 3
-# field_xmax = 4
-# field_ymax = 5
+# Creates an arguments parser allowing User flexiblity in entering variable data 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='A program that converts image bounding box annotations into the YOLOv5 format')
+    parser.add_argument('-height', '--image-height', type=int, default=800, help='Takes the height of the training image')
+    parser.add_argument('-width', '--image-width', type=int, default=800, help='Takes the Width of the image')
+    parser.add_argument('-image', '--field-image', type=int, default=7, help='CSV field containing the training image file name')
+    parser.add_argument('-header', '--header-row', type=int, choices=[0,1], default=1, help='Denotes the presence or absence of a header row in CSV file')
+    parser.add_argument('-xmin', '--field-xmin', type=int, default=2, help='CSV field containing the x-axis minimum value')
+    parser.add_argument('-ymin', '--field-ymin', type=int, default=3, help='CSV field containing the y-axis minimum value')
+    parser.add_argument('-xmax', '--field-xmax', type=int, default=4, help='CSV field containing the x-axis maximum value')
+    parser.add_argument('-ymax', '--field-ymax', type=int, default=5, help='CSV field containing the y-axis maximum value')
+    
+    args = parser.parse_args()
 
 
-#TODO add other field definitions for other input files
+    # Extracts necessary values from user input arguments
+    image_height = args.image_height
+    image_width = args.image_width
+    field_image = args.field_image
+    header_row = args.header_row
+    field_xmin = args.field_xmin
+    field_ymin = args.field_ymin
+    field_xmax = args.field_xmax
+    field_ymax = args.field_ymax
+
+# -------------------- Examples
+# Poland
+# $ python convert-new2.py -height=1216 -width=1216 -image=6 -xmin=2 -ymin=5 -xmax=4 -ymax=3 -header=1
+#
+# McKellar
+# $ python convert-new2.py -height=926 -width=926 -image=1 -header=1
+
+
 
 # Read and parse annotations data
 def extract_annotations(csv_file):
@@ -129,6 +111,7 @@ def write_yolov5(file_dict):
 
 # ------------------- Main Execution -------------------------------------------------------------
 
+
 print("Converting annotations from Weinstein et al research data")
 
 # Prepare output directory
@@ -148,3 +131,4 @@ for ann in tqdm(annotations):
     write_yolov5(file_dict)
 
 print("Done")
+
