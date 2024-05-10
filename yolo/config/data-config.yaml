@@ -1,9 +1,0 @@
-train: test1/images/train/ 
-val:  test1/images/val/
-test: test1/images/test/
-
-# number of classes
-nc: 4
-
-# class names
-names: ["trafficlight","stop", "speedlimit","crosswalk"]
