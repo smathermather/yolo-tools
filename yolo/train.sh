@@ -10,7 +10,7 @@ IMG_SIZE=896
 #TRAIN_CFG=yolov7.yaml
 TRAIN_CFG=yolov7-tiny.yaml
 TRAIN_WTS=yolov7_training.pt
-RUN_NAME=mekellar-1_3ep_det
+RUN_NAME=mckellar-1_3ep_det
 
 echo "running model training"
 

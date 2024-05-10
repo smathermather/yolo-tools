@@ -42,7 +42,14 @@ if __name__ == "__main__":
     field_xmax = args.field_xmax
     field_ymax = args.field_ymax
 
-#TODO add other field definitions for other input files
+# -------------------- Examples
+# Poland
+# $ python convert-new2.py -height=1216 -width=1216 -image=6 -xmin=2 -ymin=5 -xmax=4 -ymax=3 -header=1
+#
+# McKellar
+# $ python convert-new2.py -height=926 -width=926 -image=1 -header=1
+
+
 
 # Read and parse annotations data
 def extract_annotations(csv_file):
