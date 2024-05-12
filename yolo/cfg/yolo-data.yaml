@@ -1,0 +1,9 @@
+train: data/test1/images/train/ 
+val:  data/test1/images/val/
+test: data/test1/images/test/
+
+# number of classes
+nc: 1
+
+# class names
+names: ["Bird"]

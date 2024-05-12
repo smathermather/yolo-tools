@@ -3,14 +3,14 @@
 NUM_EPOCHS=3
 #NUM_EPOCHS=100
 #TRAIN_DATA=data/neill-2.yaml
-TRAIN_DATA=data/mckellar-1.yaml
+TRAIN_DATA=data/test1.yaml
 #IMG_SIZE=1280
 #IMG_SIZE=640
 IMG_SIZE=896
 #TRAIN_CFG=yolov7.yaml
 TRAIN_CFG=yolov7-tiny.yaml
 TRAIN_WTS=yolov7_training.pt
-RUN_NAME=mckellar-1_3ep_det
+RUN_NAME=test1_3ep_det
 
 echo "running model training"
 
