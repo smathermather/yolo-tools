@@ -1,10 +1,11 @@
-# cv-tools
-Scripts to support various computer vision data management tasks.
+# yolo-tools
+This repo contains a collection of python and shell scripts to support various computer vision data management and model training tasks involving YOLO.
 
-## yolo
+These scripts are provided as part of the open-source drone mapping and object counting workflow described here:  https://twomile.com/open-source-drone-mapping-and-object-counting/
 
-The scripts in this directory support processing of prepared datasets for use with YOLO.
-At the time of development, the target is YOLOv7.  Scripts are adapted from: https://blog.paperspace.com/train-yolov7-custom-data/
+Scripts were originally developed in 2024 for YOLOv7.
+
+Several scripts are adapted from code published on the excellent Paperspace machine learning blog: https://blog.paperspace.com/train-yolov7-custom-data/
 
 `convert-pascal.py` 
 
