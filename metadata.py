@@ -8,18 +8,27 @@
 import json
 import onnx
 import os
+import argparse
 import sys
 
-# Ensures parameters entered meet the count necessary to assign all fields and none are of type 'str'
+# Ensures parameters entered meet the count necessary to assign all fields
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print ("\nParameter Count Does Not Meet Requirements: \n")
-        print ("Usage: metadata.py <input_model_path> <output_path>\n")
-        sys.exit(1)
+    #Describes the program's usage and gives an example of usage
+    parser = argparse.ArgumentParser(description="This program intakes information from the assigned input path, processes it, assigning class names, and sends it to the output path.")
+    parser.add_argument('-input', '--input-model-path', type=str, required=True, help="Accepts the Input Path")
+    parser.add_argument('-output', '--output-path', type=str, required=True, help= "Accepts the Output Path")
+    parser.add_argument('-class', '--class-names', type=str, nargs= '*', required=True, help="Takes in class names separated by commas. IE. term,new_term,third_term")
+    args = parser.parse_args()
 
-# params to be entered in the command line and converted to integers for use in functions
-input_model_path = sys.argv[1]
-output_path = sys.argv[2]
+    # Assigns params entered into the terminal to the variables used in the program
+    input_model_path = args.input_model_path
+    output_path = args.output_path
+    class_inputs = ''.join(args.class_names).split(',') # creates a list of the individual elements given in the --class_names input 
+
+    # Prints a confirmation message of the params entered
+    print('Input Path is:', input_model_path + '\nOutput Path is:', output_path +'\nClass Names are:', class_inputs)
+    
+
 
 #model_path = "runs/train/poland1b_det2/weights/best.onnx"
 #model = onnx.load('deeplabv3_landcover_4c.onnx')
@@ -27,9 +36,14 @@ output_path = sys.argv[2]
 #model = onnx.load(model_path)
 model = onnx.load(input_model_path)
 
-class_names = {
-    0: 'bird'
-}
+# Builds a class_names dictionary using Key, Value pairs of the index for each element in class_inputs and the list element itself
+class_names = {}
+for index, element in enumerate(class_inputs):
+    class_names[index] = element
+
+# Prints a confirmation of the class_names dictionary
+print ('Class Dictionary:', class_names)
+
 
 m1 = model.metadata_props.add()
 m1.key = 'model_type'
