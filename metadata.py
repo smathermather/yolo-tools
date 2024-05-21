@@ -28,12 +28,6 @@ if __name__ == "__main__":
     # Prints a confirmation message of the params entered
     print('Input Path is:', input_model_path + '\nOutput Path is:', output_path +'\nClass Names are:', class_inputs)
     
-
-
-#model_path = "runs/train/poland1b_det2/weights/best.onnx"
-#model = onnx.load('deeplabv3_landcover_4c.onnx')
-#model_path = "runs/train/poland1-100_det/weights/best.onnx"
-#model = onnx.load(model_path)
 model = onnx.load(input_model_path)
 
 # Builds a class_names dictionary using Key, Value pairs of the index for each element in class_inputs and the list element itself
@@ -43,7 +37,6 @@ for index, element in enumerate(class_inputs):
 
 # Prints a confirmation of the class_names dictionary
 print ('Class Dictionary:', class_names)
-
 
 m1 = model.metadata_props.add()
 m1.key = 'model_type'

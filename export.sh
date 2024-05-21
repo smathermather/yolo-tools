@@ -8,7 +8,7 @@
 
 # Function to display usage/help message
 usage() {
-    echo "Usage: $0 -r <RUN_NAME> -w <INPUT_WEIGHTS> -s <IMG_SIZE>"
+    echo "Usage: $0 -r <RUN_NAME> -s <IMG_SIZE> -c <CLASS_NAMES>"
     exit 1
 }
 
@@ -20,13 +20,13 @@ fi
 SCRIPTS_DIR=$(dirname "$0")
 
 # Loops through command line options and their arguments storing the arguments for later use.
-while getopts ':r:w:s:' opt; do
+while getopts ':r:s:c:' opt; do
 	case $opt in
 		r) RUN_NAME="$OPTARG"
 		;;
-		w) INPUT_WEIGHTS="$OPTARG"
-		;;
 		s) IMG_SIZE="$OPTARG"
+		;;
+		c) CLASS_NAMES="$OPTARG"
 		;;
 		\?) echo "Invalid Option at -$OPTARG" >&2
 		exit 1
@@ -41,32 +41,23 @@ while getopts ':r:w:s:' opt; do
 done
 
 # Check if required options are provided
-if [[ -z $RUN_NAME || -z $INPUT_WEIGHTS || -z $IMG_SIZE ]]; then
+if [[ -z $RUN_NAME || -z $IMG_SIZE || -z $CLASS_NAMES ]]; then
     echo "Error: Missing required options."
     usage
 fi
 
-# Prints confirmation lines to the terminal expressing the -r option, -w option, and -s option arguments that have been assigned
-printf "Argument RUN_NAME is %s\n" "$RUN_NAME"
-printf "Argument INPUT_WEIGHTS is %s\n" "$INPUT_WEIGHTS"
-printf "Argument IMG_SIZE is %s\n" "$IMG_SIZE"
+INPUT_WEIGHTS=runs/train/$RUN_NAME/weights/best.pt
 
-#RUN_NAME=mckellar-1_100ep_det
-#RUN_NAME=poland1-100_det
-#INPUT_WEIGHTS=runs/train/$RUN_NAME/weights/best.pt
-#INPUT_WEIGHTS=runs/train/poland1-100_det/weights/best.pt
-# poland 1216(1200) / mckellar-1 896(900)
-#IMG_SIZE=1216
-#IMG_SIZE=640
-#IMG_SIZE=896
+# Prints confirmation lines to the terminal expressing the arguments that have been assigned
+printf "Argument RUN_NAME is %s\n" "$RUN_NAME"
+printf "Argument IMG_SIZE is %s\n" "$IMG_SIZE"
+printf "Using INPUT_WEIGHTS: %s\n" "$INPUT_WEIGHTS"
 
 echo "Exporting model"
-
 python export.py --weights $INPUT_WEIGHTS --grid --simplify --img-size $IMG_SIZE $IMG_SIZE
 
 echo "Setting metadata"
-
-python $SCRIPTS_DIR/metadata.py runs/train/$RUN_NAME/weights/best.onnx runs/train/$RUN_NAME/weights/$RUN_NAME-yolo7-deepness.onnx
+python $SCRIPTS_DIR/metadata.py -input runs/train/$RUN_NAME/weights/best.onnx -output runs/train/$RUN_NAME/weights/$RUN_NAME-yolo7-deepness.onnx -class $CLASS_NAMES
 
 echo "done"
 exit 0
